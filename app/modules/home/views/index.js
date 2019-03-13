@@ -52,8 +52,9 @@ export default class Index extends Component {
 
   render() {
     const dataSource = this.props.dataSource.length ? this.props.dataSource : [
-      {id: '1', name: 'aaa', createTime: '2010-10-10 10:00:00', template: 'react'},
-      {id: '2', name: 'bbb', createTime: '2010-10-10 10:00:00', template: 'vue'}
+      {id: '1', name: '基础项目', createTime: Date.now(), template: 'jQuery'},
+      {id: '2', name: '基础项目', createTime: Date.now(), template: 'React'},
+      {id: '3', name: '基础项目', createTime: Date.now(), template: 'Vue'}
     ];
     return (
       <FlatList
