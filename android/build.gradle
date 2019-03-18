@@ -39,3 +39,10 @@ task wrapper(type: Wrapper) {
     gradleVersion = '4.7'
     distributionUrl = distributionUrl.replace("bin", "all")
 }
+
+//subprojects{
+//    println "------------${it.name}"
+//}
+//rootProject.afterEvaluate { project ->
+//    println "------------${project.name}"
+//}

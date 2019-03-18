@@ -8,7 +8,9 @@ import {
   DeviceEventEmitter, Animated, Easing,
 } from 'react-native';
 import { connect } from 'dva-no-router';
+import { Actions as Router } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/Entypo';
+import templateConfig from 'config/template';
 import Actions from '../actions/index';
 import styles from '../style/index';
 
@@ -19,7 +21,18 @@ export default class Index extends Component {
   constructor(props) {
     super(props);
     new Actions(this);
+    this.initTemplate();
     props.dispatch({type: 'home/getData'});
+
+    this.templateData = [];
+    templateConfig.forEach((v, i)=>{
+      this.templateData.push({
+        id: i,
+        name: '基础项目',
+        createTime: '2019-03-03 00:00:00',
+        template: v
+      });
+    })
   }
 
   componentDidMount() {
@@ -35,7 +48,7 @@ export default class Index extends Component {
       <TouchableOpacity
         key={item.id}
         activeOpacity={1}
-        onPress={() => {}}
+        onPress={() => {Router.edit(item)}}
         style={[styles.itemBox]}
       >
         <View style={[styles.rowCenter, styles.item]}>
@@ -51,11 +64,7 @@ export default class Index extends Component {
   }
 
   render() {
-    const dataSource = this.props.dataSource.length ? this.props.dataSource : [
-      {id: '1', name: '基础项目', createTime: Date.now(), template: 'jQuery'},
-      {id: '2', name: '基础项目', createTime: Date.now(), template: 'React'},
-      {id: '3', name: '基础项目', createTime: Date.now(), template: 'Vue'}
-    ];
+    const dataSource = this.props.dataSource.length ? this.templateData.concat(this.props.dataSource) : this.templateData;
     return (
       <FlatList
         style={{backgroundColor: "#fff"}}

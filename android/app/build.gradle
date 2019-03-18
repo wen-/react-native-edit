@@ -104,6 +104,14 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        release {
+            keyAlias 'reactNativeEdit'
+            keyPassword '123456'
+            storeFile file('../keystores/reactNativeEdit.jks')
+            storePassword '123456'
+        }
+    }
     splits {
         abi {
             reset()
@@ -113,8 +121,14 @@ android {
         }
     }
     buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
         release {
             minifyEnabled enableProguardInReleaseBuilds
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
@@ -148,3 +162,25 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
+
+task copyTemplateTask(type: Copy) {
+    from '../../app/config/template'
+    into 'src/main/assets/template'
+}
+afterEvaluate {
+    println "--app----------${it.name}"
+    copyTemplateTask.execute()
+}
+//afterEvaluate { project ->
+//    println "------------${project.name}"
+//    def taskClean = project.tasks.findByPath("clean")
+//    println "${taskClean.name}"
+//    if(taskClean==null){
+//        throw new GradleException("the task clean is not found.")
+//    }
+//    //将testTask追加在clean的后面
+//    taskClean.doLast {
+//        taskZ.execute()
+//        println "---------taskClean.doLast --------------------"
+//    }
+//}

@@ -3,7 +3,7 @@ module.exports = {
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy" : true }],
     ["babel-plugin-module-resolver", {
-      "root": ["./app"],
+      "root": "./app",
       "alias": {
         "components": "./app/components",
         "config": "./app/config",

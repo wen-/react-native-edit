@@ -7,6 +7,7 @@ import CustomNavBar from './components/customNav'
 import Home from './modules/home/views';
 import AddProject from './modules/addProject/views';
 import SelectTemplate from './modules/addProject/views/selectTemplate';
+import Edit from './modules/edit/views';
 import ToastView from 'components/base/toastView';
 import DialogsView from 'components/base/dialogsView';
 
@@ -73,6 +74,7 @@ const Example = () => (
           <Scene key="home" component={Home} title="项目" navBar={CustomNavBar} initial />
           <Scene key="addProject" component={AddProject} title="新项目" navBar={CustomNavBar} />
           <Scene key="selectTemplate" component={SelectTemplate} title="选择模版" navBar={CustomNavBar} />
+          <Scene key="edit" component={Edit} title="编辑" navBar={CustomNavBar} />
         </stack>
         <Scene key="ToastView" component={ToastView} title="ToastView" navBar={CustomNavBar} />
         <Scene key="DialogsView" component={DialogsView} title="DialogsView" navBar={CustomNavBar} />

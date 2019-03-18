@@ -25,23 +25,13 @@ export default class Index extends Component {
       name: ''
     };
     new Actions(this);
+    this.init();
   }
 
   componentWillMount(){
-    this.订阅保存新增项目 = DeviceEventEmitter.addListener('保存新增项目', (params) => {
-      if(!this.state.name){
-        Toast.info('请输入项目名称');
-        return;
-      }
-      const newProject = {
-        id: Date.now(),
-        name: this.state.name,
-        createTime: moment().format('YYYY-MM-DD HH:mm:ss'),
-        template: this.props.template
-      };
-      Store.adddate('projectList', newProject);
-      this.props.dispatch({type: 'home/addData', data: [newProject]});
-      Router.pop();
+    this.订阅保存新增项目 = DeviceEventEmitter.addListener('保存新增项目', (params)=>{
+      console.log(params);
+      this.save(params);
     });
   }
 
