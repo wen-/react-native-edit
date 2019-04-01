@@ -48,7 +48,11 @@ export default class Index extends Component {
       <TouchableOpacity
         key={item.id}
         activeOpacity={1}
-        onPress={() => {Router.edit(item)}}
+        onPress={() => {
+          console.log(item);
+          this.props.dispatch({type: 'edit/setData', data: item});
+          Router.editJS(item);
+        }}
         style={[styles.itemBox]}
       >
         <View style={[styles.rowCenter, styles.item]}>

@@ -6,9 +6,12 @@ import {
 console.log('RNFetchBlob.fs.dirs.DocumentDir:', RNFetchBlob.fs.dirs.DocumentDir);
 
 export default {
-  namespace: 'editHtml',
+  namespace: 'edit',
   state: {
-    template: '',
+    // createTime: "2019-03-17 13:52:57"
+    // id: 1552830777815
+    // name: "test1"
+    // template: "jQuery"
   },
   effects: {
     //详情
