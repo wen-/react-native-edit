@@ -42,6 +42,20 @@ const styles = StyleSheet.create({
     navTitle:{
         color:"#fff",
         fontSize:16,
+    },
+    flexCenter:{
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    rowCenter:{
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    navBarEditItem:{
+        height: 30,
+        width: 40,
+        justifyContent: 'center',
+        alignItems: 'center'
     }
 });
 
@@ -92,11 +106,43 @@ export default class CustomNavBar extends React.Component {
     }
 
     _renderMiddle() {
-        return (
-            <View style={styles.navBarTitleItem}>
-                <Text style={styles.navTitle}>{ this.props.title }</Text>
-            </View>
-        )
+        if (this.state.currentScene === 'tabbar') {
+            return (
+                <View style={[styles.navBarTitleItem, styles.rowCenter]}>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            //
+                        }}
+                        style={[styles.navBarEditItem,{borderLeftWidth: 1, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#fff'}]}
+                    >
+                        <Text style={styles.navTitle}>js</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            //
+                        }}
+                        style={[styles.navBarEditItem,{borderWidth: 1, borderColor: '#fff'}]}
+                    >
+                        <Text style={styles.navTitle}>html</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={()=>{
+                            //
+                        }}
+                        style={[styles.navBarEditItem,{borderRightWidth: 1, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#fff'}]}
+                    >
+                        <Text style={styles.navTitle}>css</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }else{
+            return (
+                <View style={styles.navBarTitleItem}>
+                    <Text style={styles.navTitle}>{ this.props.title }</Text>
+                </View>
+            )
+        }
+
     }
 
     _renderRight() {

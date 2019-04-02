@@ -88,6 +88,8 @@ const Example = () => (
             }}
             swipeEnabled
             showLabel={true}
+            hideTabBar
+            navBar={CustomNavBar}
             tabBarStyle={{}}
             activeBackgroundColor="white"
             inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"

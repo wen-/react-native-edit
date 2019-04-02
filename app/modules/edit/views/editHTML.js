@@ -16,7 +16,7 @@ import Spinner from 'react-native-spinkit';
 import Actions from '../actions/editHTML';
 import styles from '../style/index';
 
-const mapStateToProps = ({ editHtml }) => ({  });
+const mapStateToProps = ({ edit }) => ({ ...edit });
 
 @connect(mapStateToProps)
 export default class Index extends Component {
@@ -88,7 +88,7 @@ export default class Index extends Component {
   render() {
 
     return (
-      <View style={styles.f1}>
+      <View style={[styles.f1,{backgroundColor: '#fff', paddingTop: 10}]}>
         <WebView
           style={[styles.f1]}
           ref={(w)=>{this.mainWebView=w}}
