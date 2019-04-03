@@ -1,4 +1,4 @@
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, DeviceEventEmitter,} from 'react-native'
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, DeviceEventEmitter, NativeEventEmitter} from 'react-native'
 import React from 'react'
 import { Actions as Router } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/Entypo';
@@ -53,9 +53,10 @@ const styles = StyleSheet.create({
     },
     navBarEditItem:{
         height: 30,
-        width: 40,
+        width: 50,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        //backgroundColor: '#fff'
     }
 });
 
@@ -66,6 +67,7 @@ export default class CustomNavBar extends React.Component {
         this.state={
             透明度: 0,
             currentScene: props.routeName || props.initialRouteName,
+            currentEdit: 'js'
         }
     }
 
@@ -81,11 +83,19 @@ export default class CustomNavBar extends React.Component {
             backgroundColor: _rgba
           });
         });
+        this.订阅编辑切换 = DeviceEventEmitter.addListener('编辑',(params) => {
+            this.setState({
+                currentEdit: params
+            });
+        })
     }
 
     componentWillUnmount() {
         if(this.订阅改变导航透明度) {
             this.订阅改变导航透明度.remove();
+        }
+        if(this.订阅编辑切换) {
+            this.订阅编辑切换.remove();
         }
     }
 
@@ -111,27 +121,52 @@ export default class CustomNavBar extends React.Component {
                 <View style={[styles.navBarTitleItem, styles.rowCenter]}>
                     <TouchableOpacity
                         onPress={()=>{
-                            //
+                            Router.jump('editJS');
                         }}
-                        style={[styles.navBarEditItem,{borderLeftWidth: 1, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#fff'}]}
+                        activeOpacity={0.8}
+                        style={[
+                            styles.navBarEditItem,
+                            {
+                                borderLeftWidth: 1,
+                                borderTopWidth: 1,
+                                borderBottomWidth: 1,
+                                borderColor: '#fff',
+                                borderTopLeftRadius: 4,
+                                borderBottomLeftRadius: 4,
+                            },
+                            this.state.currentEdit=='js'&&{backgroundColor: '#fff'}
+                        ]}
                     >
-                        <Text style={styles.navTitle}>js</Text>
+                        <Text style={[styles.navTitle, this.state.currentEdit=='js'&&{color: '#6cc2ff'}]}>js</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={()=>{
-                            //
+                            Router.jump('editHTML');
                         }}
-                        style={[styles.navBarEditItem,{borderWidth: 1, borderColor: '#fff'}]}
+                        activeOpacity={0.8}
+                        style={[styles.navBarEditItem,{borderWidth: 1, borderColor: '#fff'},this.state.currentEdit=='html'&&{backgroundColor: '#fff'}]}
                     >
-                        <Text style={styles.navTitle}>html</Text>
+                        <Text style={[styles.navTitle, this.state.currentEdit=='html'&&{color: '#6cc2ff'}]}>html</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={()=>{
-                            //
+                            Router.jump('editCSS');
                         }}
-                        style={[styles.navBarEditItem,{borderRightWidth: 1, borderTopWidth: 1, borderBottomWidth: 1, borderColor: '#fff'}]}
+                        activeOpacity={0.8}
+                        style={[
+                            styles.navBarEditItem,
+                            {
+                                borderRightWidth: 1,
+                                borderTopWidth: 1,
+                                borderBottomWidth: 1,
+                                borderColor: '#fff',
+                                borderTopRightRadius: 4,
+                                borderBottomRightRadius: 4
+                            },
+                            this.state.currentEdit=='css'&&{backgroundColor: '#fff'}
+                        ]}
                     >
-                        <Text style={styles.navTitle}>css</Text>
+                        <Text style={[styles.navTitle, this.state.currentEdit=='css'&&{color: '#6cc2ff'}]}>css</Text>
                     </TouchableOpacity>
                 </View>
             )
@@ -147,29 +182,41 @@ export default class CustomNavBar extends React.Component {
 
     _renderRight() {
         if (this.state.currentScene === 'home') {
-        return (
-          <View style={[styles.navBarRightItem, { flexDirection: 'row', justifyContent: 'flex-end' }]}>
-            <TouchableOpacity
-              onPress={() => {
-                Router.addProject();
-              }}
-              style={{ paddingRight: 10,justifyContent: 'center' }}>
-              <Icon name={"plus"} size={20} color={'#fff'} />
-            </TouchableOpacity>
-          </View>
-        )
+            return (
+              <View style={[styles.navBarRightItem, { flexDirection: 'row', justifyContent: 'flex-end' }]}>
+                <TouchableOpacity
+                  onPress={() => {
+                    Router.addProject();
+                  }}
+                  style={{ paddingRight: 10,justifyContent: 'center' }}>
+                  <Icon name={"plus"} size={20} color={'#fff'} />
+                </TouchableOpacity>
+              </View>
+            )
         } else if (this.state.currentScene === 'addProject') {
-        return (
-          <View style={[styles.navBarRightItem, { flexDirection: 'row', justifyContent: 'flex-end' }]}>
-            <TouchableOpacity
-              onPress={() => {
-                DeviceEventEmitter.emit('保存新增项目');
-              }}
-              style={{ paddingRight: 10,justifyContent: 'center' }}>
-              <Icon name={"save"} size={20} color={'#fff'} />
-            </TouchableOpacity>
-          </View>
-        )
+            return (
+              <View style={[styles.navBarRightItem, { flexDirection: 'row', justifyContent: 'flex-end' }]}>
+                <TouchableOpacity
+                  onPress={() => {
+                    DeviceEventEmitter.emit('保存新增项目');
+                  }}
+                  style={{ paddingRight: 10,justifyContent: 'center' }}>
+                  <Icon name={"save"} size={20} color={'#fff'} />
+                </TouchableOpacity>
+              </View>
+            )
+        } else if (this.state.currentScene === 'tabbar') {
+            return (
+                <View style={[styles.navBarRightItem, { flexDirection: 'row', justifyContent: 'flex-end' }]}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            DeviceEventEmitter.emit('运行');
+                        }}
+                        style={{ paddingRight: 10,justifyContent: 'center' }}>
+                        <Icon name={"triangle-right"} size={20} color={'#fff'} />
+                    </TouchableOpacity>
+                </View>
+            )
         } else {
             return null;
         }

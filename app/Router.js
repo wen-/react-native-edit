@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import {Platform, StyleSheet, Text, View, NativeEventEmitter, DeviceEventEmitter} from 'react-native';
 import { StackViewStyleInterpolator } from 'react-navigation-stack';
 import { Scene, Router, Actions, Reducer, ActionConst, Overlay, Tabs, Modal, Drawer, Stack, Lightbox } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -94,9 +94,9 @@ const Example = () => (
             activeBackgroundColor="white"
             inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
           >
-            <Scene key="editJS" hideNavBar component={EditJS} title="js" />
-            <Scene key="editHTML" hideNavBar component={EditHTML} title="html" />
-            <Scene key="editCSS" hideNavBar component={EditCSS} title="css" />
+            <Scene key="editJS" hideNavBar component={EditJS} title="js" onEnter={()=>{DeviceEventEmitter.emit('编辑','js')}} />
+            <Scene key="editHTML" hideNavBar component={EditHTML} title="html" onEnter={()=>{DeviceEventEmitter.emit('编辑','html')}} />
+            <Scene key="editCSS" hideNavBar component={EditCSS} title="css" onEnter={()=>{DeviceEventEmitter.emit('编辑','css')}} />
             {/*<Stack*/}
               {/*key="tab_1"*/}
               {/*title="Tab #1"*/}

@@ -88,7 +88,7 @@ export default class Index extends Component {
   render() {
 
     return (
-      <View style={[styles.f1,{backgroundColor: '#fff', paddingTop: 10}]}>
+      <View style={[styles.f1,{backgroundColor: '#fff'}]}>
         <WebView
           style={[styles.f1]}
           ref={(w)=>{this.mainWebView=w}}
