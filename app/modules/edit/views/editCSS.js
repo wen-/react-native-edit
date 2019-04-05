@@ -11,6 +11,7 @@ import {
   DeviceEventEmitter, Animated, Easing,
 } from 'react-native';
 import { connect } from 'dva-no-router';
+import { Actions as Router } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/Entypo';
 import Spinner from 'react-native-spinkit';
 import Actions from '../actions/editCSS';
@@ -33,7 +34,8 @@ export default class Index extends Component {
       const data = await this.getContent();
       this.setState({
         path: path,
-        content: data,
+          content: data.content,
+          filePath: data.path,
       });
     });
 

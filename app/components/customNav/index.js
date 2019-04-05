@@ -210,7 +210,7 @@ export default class CustomNavBar extends React.Component {
                 <View style={[styles.navBarRightItem, { flexDirection: 'row', justifyContent: 'flex-end' }]}>
                     <TouchableOpacity
                         onPress={() => {
-                            DeviceEventEmitter.emit('运行');
+                            DeviceEventEmitter.emit('保存js');
                         }}
                         style={{ paddingRight: 10,justifyContent: 'center' }}>
                         <Icon name={"triangle-right"} size={20} color={'#fff'} />

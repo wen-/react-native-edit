@@ -1,5 +1,6 @@
 import {
-  Platform,
+    DeviceEventEmitter,
+    Platform,
 } from 'react-native';
 import BaseActions from 'tools/baseActions'
 import RNFetchBlob from 'rn-fetch-blob';
@@ -22,14 +23,16 @@ export default class Actions extends BaseActions{
 
   async getContent(){
     const path = await RNFetchBlob.fs.dirs.DocumentDir + '/template/' + this.props.template + '/template.html';
-    const data = await RNFetchBlob.fs.readFile(path);
-    // this.mainWebView.injectJavaScript = ()=>{
-    //   return(`(function(){window.templateContent = '${data}'})();`);
-    // }
-    // this.mainWebView.injectJavaScript = `(function(){window.templateContent = '${data}'})();`;
-    // this.setState({
-    //   content: data
-    // })
-    return data;
+      const content = await RNFetchBlob.fs.readFile(path);
+      return {path, content};
   }
+
+    async save(data){
+        if(data != this.state.content){
+            const res = await RNFetchBlob.fs.writeFile(this.state.filePath, data, 'utf8');
+            DeviceEventEmitter.emit('保存css');
+        }else{
+            DeviceEventEmitter.emit('保存css');
+        }
+    }
 }

@@ -11,6 +11,7 @@ import {
   DeviceEventEmitter, Animated, Easing,
 } from 'react-native';
 import { connect } from 'dva-no-router';
+import { Actions as Router } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/Entypo';
 import Spinner from 'react-native-spinkit';
 import Actions from '../actions/editHTML';
@@ -33,7 +34,8 @@ export default class Index extends Component {
       const data = await this.getContent();
       this.setState({
         path: path,
-        content: data,
+          content: data.content,
+          filePath: data.path,
       });
     });
 
@@ -50,7 +52,22 @@ export default class Index extends Component {
     //Toast.info('测试toast提示框');
     //Toast.info({msg: '测试toast提示框', duration: 3000, onDismiss: ()=>{Toast.info('toast提示框')}});
     //Toast.loading({msg: "加载中"});
+      this.订阅保存 = DeviceEventEmitter.addListener('保存html',(params) => {
+          this.mainWebView.postMessage(JSON.stringify({type: 'getData'}))
+      });
+      this.订阅运行 = DeviceEventEmitter.addListener('运行',(params) => {
+          Router.RunHtml({path: this.state.filePath});
+      })
   }
+
+    componentWillUnmount() {
+        if(this.订阅保存) {
+            this.订阅保存.remove();
+        }
+        if(this.订阅运行) {
+            this.订阅运行.remove();
+        }
+    }
 
   renderLoading(){
     return(
@@ -70,6 +87,8 @@ export default class Index extends Component {
     let data = event.nativeEvent.data && JSON.parse(event.nativeEvent.data);
     if(data.type == 'test'){
       console.log(data);
+    }else if(data.type == 'saveDate'){
+        this.save(decodeURI(data.content));
     }
   }
 

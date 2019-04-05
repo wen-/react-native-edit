@@ -96,6 +96,18 @@ html,body,#container{
 
 <script src="min/vs/loader.js"></script>
 <script>
+    function postRN(type, params) {
+        window.postMessage && window.postMessage(JSON.stringify({'type': type, 'params': params}));
+    };
+    window.postRN = postRN;
+    window.document.addEventListener('message', function (e) {
+        var message = JSON.parse(e.data);
+        if (message.type == 'getData') {
+            const content = encodeURI(editor.getValue());
+            postRN('saveDate', {content});
+        }
+    });
+
     function getTemplate(){
       setTimeout(()=>{
         if(window.templateContent){
@@ -109,7 +121,7 @@ html,body,#container{
     function init(v){
       require.config({ paths: { 'vs': 'min/vs' }});
       require(['vs/editor/editor.main'], function() {
-        var editor = monaco.editor.create(document.getElementById('container'), {
+        window.editor = monaco.editor.create(document.getElementById('container'), {
           value: decodeURI(v.content),
           language: v.type,
           minimap: {
@@ -118,7 +130,6 @@ html,body,#container{
         });
         const loadElem = document.getElementById('loading');
         loadElem.parentNode.removeChild(loadElem);
-        console.log('123');
       });
     }
 

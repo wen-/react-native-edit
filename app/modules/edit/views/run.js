@@ -13,35 +13,15 @@ import {
 import { connect } from 'dva-no-router';
 import Icon from 'react-native-vector-icons/Entypo';
 import Spinner from 'react-native-spinkit';
-import Actions from '../actions/index';
 import styles from '../style/index';
 
-const mapStateToProps = ({ editHtml }) => ({  });
-
-@connect(mapStateToProps)
-export default class Index extends Component {
+export default class RunHtml extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      path: null,
-      content: null,
+      path: props.path,
     }
     this.mainWebView = React.createRef();
-    new Actions(this);
-    InteractionManager.runAfterInteractions(async () => {
-      const path = await this.getPath();
-      const data = await this.getContent();
-      this.setState({
-        path: path,
-        content: data,
-      });
-    });
-
-    // if(Platform.OS == 'android'){
-    //   this.webViewUri = "file://"+this.webViewUri;
-    // }
-    //props.dispatch({type: 'editHtml/getData'});
-
   }
 
   componentDidMount() {
@@ -97,7 +77,7 @@ export default class Index extends Component {
           javaScriptEnabled={true}
           domStorageEnabled={true}
           //有换行符或缩进符的要转码
-          injectedJavaScript={`window.templateContent={"type": "html", "content": "${encodeURI(this.state.content)}"};`}
+          injectedJavaScript={`window.templateContent={};`}
           //allowUniversalAccessFromFileURLs={true}
           allowFileAccess={true}
           //geolocationEnabled={true}

@@ -14,8 +14,8 @@ export default {
       console.log(result);
       if(result){
         yield put({
-          type: 'addData',
-          data: result
+          type: 'setData',
+          data: {dataSource: result}
         });
       }
     }
@@ -29,7 +29,7 @@ export default {
       return { ...state, dataSource}
     },
     clear() {
-      return { }
+      return {dataSource: []}
     },
   }
 }
