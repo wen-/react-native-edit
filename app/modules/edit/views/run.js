@@ -19,7 +19,7 @@ export default class RunHtml extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      path: props.path,
+      path: (Platform.OS == 'android'&&!props.path.startsWith('file'))?('file://'+props.path):props.path,
     }
     this.mainWebView = React.createRef();
   }
@@ -65,6 +65,15 @@ export default class RunHtml extends Component {
     )
   }
 
+    injectedJs(){
+    const template = this.props.template;
+    if(template == "React"){
+        return `const css = document.createElement("link");css.type="text/css";css.rel="stylesheet";css.href="template.css?"+new Date().getTime();document.head.appendChild(css);const mainjs = document.createElement("script");mainjs.type="text/babel";mainjs.src="main.js?"+new Date().getTime();document.body.appendChild(mainjs);window.templateContent={};`
+      }else{
+        return `const css = document.createElement("link");css.type="text/css";css.rel="stylesheet";css.href="template.css?"+new Date().getTime();document.head.appendChild(css);const mainjs = document.createElement("script");mainjs.src="main.js?"+new Date().getTime();document.body.appendChild(mainjs);window.templateContent={};`
+      }
+    }
+
   render() {
 
     return (
@@ -72,12 +81,12 @@ export default class RunHtml extends Component {
         <WebView
           style={[styles.f1]}
           ref={(w)=>{this.mainWebView=w}}
-          source={{uri: this.state.path}}
+          source={{uri: this.state.path+'?'+Date.now()}}
           startInLoadingState={true}
           javaScriptEnabled={true}
           domStorageEnabled={true}
           //有换行符或缩进符的要转码
-          injectedJavaScript={`window.templateContent={};`}
+          injectedJavaScript={this.injectedJs()}
           //allowUniversalAccessFromFileURLs={true}
           allowFileAccess={true}
           //geolocationEnabled={true}

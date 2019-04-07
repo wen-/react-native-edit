@@ -10,9 +10,11 @@ import {
 import { connect } from 'dva-no-router';
 import { Actions as Router } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/Entypo';
+import Swipeout from 'react-native-swipeout';
 import templateConfig from 'config/template';
 import Actions from '../actions/index';
 import styles from '../style/index';
+
 
 const mapStateToProps = ({ home }) => ({ dataSource: home.dataSource });
 
@@ -43,8 +45,25 @@ export default class Index extends Component {
     //Toast.loading({msg: "加载中"});
   }
 
+    swipeoutBtns(item){
+      return([
+        {
+            text: '删除',
+            color: '#fff',
+            backgroundColor: 'red',
+            onPress: ()=>{
+                console.log(item);
+            }
+        }
+      ]);
+    }
+
   renderItem(item) {
     return(
+        <Swipeout
+            right={this.swipeoutBtns(item)}
+            backgroundColor={"#fff"}
+        >
       <TouchableOpacity
         key={item.id}
         activeOpacity={1}
@@ -64,6 +83,7 @@ export default class Index extends Component {
         </View>
 
       </TouchableOpacity>
+        </Swipeout>
     );
   }
 

@@ -28,7 +28,6 @@ export default class Index extends Component {
             path: null,
             content: null,
         };
-        Router.currentParams;
         this.mainWebView = React.createRef();
         new Actions(this);
         InteractionManager.runAfterInteractions(async () => {
@@ -85,7 +84,7 @@ export default class Index extends Component {
         if(data.type == 'test'){
             console.log(data);
         }else if(data.type == 'saveDate'){
-          this.save(decodeURI(data.content));
+          this.save(decodeURI(data.params.content));
         }
     }
 

@@ -84,7 +84,7 @@ const Example = () => (
                             onTabOnPress={() => {
                                 console.log('Back to initial and also print this');
                             }}
-                            swipeEnabled
+                            swipeEnabled={false}
                             showLabel={true}
                             hideTabBar
                             navBar={CustomNavBar}

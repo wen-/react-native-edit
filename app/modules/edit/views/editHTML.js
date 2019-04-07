@@ -14,6 +14,7 @@ import { connect } from 'dva-no-router';
 import { Actions as Router } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/Entypo';
 import Spinner from 'react-native-spinkit';
+import Toast from 'components/base/toast';
 import Actions from '../actions/editHTML';
 import styles from '../style/index';
 
@@ -56,7 +57,8 @@ export default class Index extends Component {
           this.mainWebView.postMessage(JSON.stringify({type: 'getData'}))
       });
       this.订阅运行 = DeviceEventEmitter.addListener('运行',(params) => {
-          Router.RunHtml({path: this.state.filePath});
+          Toast.hide();
+          Router.runHtml({path: this.state.filePath, template: this.props.template});
       })
   }
 
@@ -88,7 +90,7 @@ export default class Index extends Component {
     if(data.type == 'test'){
       console.log(data);
     }else if(data.type == 'saveDate'){
-        this.save(decodeURI(data.content));
+        this.save(decodeURI(data.params.content));
     }
   }
 

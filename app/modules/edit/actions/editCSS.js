@@ -23,7 +23,7 @@ export default class Actions extends BaseActions{
   }
 
   async getContent(){
-    const path = await RNFetchBlob.fs.dirs.DocumentDir + '/template/' + this.props.template + '/template.css';
+    const path = await RNFetchBlob.fs.dirs.DocumentDir + '/template/' + this.props.id + '/template.css';
       const content = await RNFetchBlob.fs.readFile(path);
       return {path, content};
   }
@@ -31,6 +31,7 @@ export default class Actions extends BaseActions{
     async save(data){
         if(data != this.state.content){
             const res = await RNFetchBlob.fs.writeFile(this.state.filePath, data, 'utf8');
+            console.log("res:", res);
         }
         DeviceEventEmitter.emit('运行');
     }

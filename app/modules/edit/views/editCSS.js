@@ -52,6 +52,9 @@ export default class Index extends Component {
     //Toast.info('测试toast提示框');
     //Toast.info({msg: '测试toast提示框', duration: 3000, onDismiss: ()=>{Toast.info('toast提示框')}});
     //Toast.loading({msg: "加载中"});
+      this.订阅保存 = DeviceEventEmitter.addListener('保存css',(params) => {
+          this.mainWebView.postMessage(JSON.stringify({type: 'getData'}))
+      });
   }
 
   renderLoading(){
@@ -72,6 +75,8 @@ export default class Index extends Component {
     let data = event.nativeEvent.data && JSON.parse(event.nativeEvent.data);
     if(data.type == 'test'){
       console.log(data);
+    }else if(data.type == 'saveDate'){
+        this.save(decodeURI(data.params.content));
     }
   }
 

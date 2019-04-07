@@ -22,7 +22,7 @@ export default class Actions extends BaseActions{
   }
 
   async getContent(){
-    const path = await RNFetchBlob.fs.dirs.DocumentDir + '/template/' + this.props.template + '/main.js';
+    const path = await RNFetchBlob.fs.dirs.DocumentDir + '/template/' + this.props.id + '/main.js';
     const content = await RNFetchBlob.fs.readFile(path);
     return {path, content};
   }

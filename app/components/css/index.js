@@ -34,7 +34,7 @@ export default style => StyleSheet.create({
   },
   line: {
     backgroundColor: '#ccc',
-    height: StyleSheet.hairlineWidth,
+    height: 1,
   },
 
   ...style
