@@ -10,7 +10,7 @@ import {
 import { connect } from 'dva-no-router';
 import { Actions as Router } from 'react-native-router-flux'
 import Icon from 'react-native-vector-icons/Entypo';
-import Swipeout from 'react-native-swipeout';
+import { SwipeListView } from 'react-native-swipe-list-view';
 import templateConfig from 'config/template';
 import Actions from '../actions/index';
 import styles from '../style/index';
@@ -22,6 +22,9 @@ const mapStateToProps = ({ home }) => ({ dataSource: home.dataSource });
 export default class Index extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+
+    };
     new Actions(this);
     this.initTemplate();
     props.dispatch({type: 'home/getData'});
@@ -45,57 +48,66 @@ export default class Index extends Component {
     //Toast.loading({msg: "加载中"});
   }
 
-    swipeoutBtns(item){
-      return([
-        {
-            text: '删除',
-            color: '#fff',
-            backgroundColor: 'red',
-            onPress: ()=>{
-                console.log(item);
-            }
-        }
-      ]);
+    renderItem(item, index) {
+      console.log(123);
+        return(
+            <TouchableOpacity
+                key={item.id}
+                activeOpacity={1}
+                onPress={() => {
+                    console.log(item);
+                    this.props.dispatch({type: 'edit/setData', data: item});
+                    Router.editJS(item);
+                }}
+                style={[styles.itemBox]}
+            >
+                <View style={[styles.rowCenter, styles.item]}>
+                    <View style={styles.f1}>
+                        <Text style={[styles.fs16, styles.mainColor]}>{item.name} <Text style={[styles.fs12, styles.assistColor1]}>{item.template}</Text></Text>
+                        <Text style={[styles.fs12, styles.assistColor]}>{item.createTime}</Text>
+                    </View>
+                    <Icon name={"chevron-small-right"} size={20} color={'#d9d9d9'} />
+                </View>
+
+            </TouchableOpacity>
+        );
     }
 
-  renderItem(item) {
-    return(
-        <Swipeout
-            right={this.swipeoutBtns(item)}
-            backgroundColor={"#fff"}
-        >
-      <TouchableOpacity
-        key={item.id}
-        activeOpacity={1}
-        onPress={() => {
-          console.log(item);
-          this.props.dispatch({type: 'edit/setData', data: item});
-          Router.editJS(item);
-        }}
-        style={[styles.itemBox]}
-      >
-        <View style={[styles.rowCenter, styles.item]}>
-          <View style={styles.f1}>
-            <Text style={[styles.fs16, styles.mainColor]}>{item.name} <Text style={[styles.fs12, styles.assistColor1]}>{item.template}</Text></Text>
-            <Text style={[styles.fs12, styles.assistColor]}>{item.createTime}</Text>
-          </View>
-          <Icon name={"chevron-small-right"} size={20} color={'#d9d9d9'} />
-        </View>
-
-      </TouchableOpacity>
-        </Swipeout>
-    );
-  }
-
   render() {
-    const dataSource = this.props.dataSource.length ? this.templateData.concat(this.props.dataSource) : this.templateData;
+    let dataSource = this.props.dataSource.length ? this.templateData.concat(this.props.dataSource) : this.templateData;
+      dataSource = dataSource && dataSource.reduce((a,b,i)=>{
+          return [...a, {...b, key: i}]
+      },[]);
     return (
-      <FlatList
-        style={{backgroundColor: "#fff"}}
-        data={dataSource}
-        keyExtractor = {(item, index) => item.id.toString()}
-        renderItem={({ item }) => this.renderItem(item)}
-        ItemSeparatorComponent={()=><View style={[styles.line, {marginLeft: 5}]} />}
+        <SwipeListView
+          useFlatList
+          data={dataSource}
+          renderItem={ (data, rowMap) => this.renderItem(data.item, data.index)}
+          renderHiddenItem={ (data, rowMap) => (
+              <View style={styles.rowBack}>
+                  <TouchableOpacity
+                      activeOpacity={1}
+                      onPress={()=>{
+                          console.log(data.item);
+                          const item = data.item;
+                          const newData = this.props.dataSource.filter((v)=>{
+                          return v.id != item.id;
+                      })
+                          this.props.dispatch({type: 'home/setData', data: {dataSource: newData}});
+                      }
+
+              }
+                      style={[styles.delBtn]}
+                  >
+                      <Text style={styles.delTxt}>删除</Text>
+
+                  </TouchableOpacity>
+              </View>
+          )}
+          disableRightSwipe={true}
+          rightOpenValue={-75}
+          closeOnScroll={true}
+          ItemSeparatorComponent={()=><View style={[styles.line, {marginLeft: 5}]} />}
       />
     );
   }
