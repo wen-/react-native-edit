@@ -1,9 +1,9 @@
-import React from 'react';
-import storage from 'tools/storage';
-import dva from 'dva-no-router';
-import { createLogger } from 'redux-logger';
-import Router from './Router';
-import Models from './dvaModel';
+import React from "react";
+import storage from "tools/storage";
+import dva from "dva-no-router";
+import { createLogger } from "redux-logger";
+import Router from "./Router";
+import Models from "./dvaModel";
 
 const app = dva({
   initialState: {},

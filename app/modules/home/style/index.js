@@ -11,7 +11,7 @@ export default Cssload({
     borderBottomColor: "black",
     borderBottomWidth: 1,
     justifyContent: "center",
-    height: 50,
+    height: 49,
   },
   item: {
     height: 49,

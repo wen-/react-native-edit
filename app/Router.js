@@ -1,45 +1,45 @@
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, NativeEventEmitter, DeviceEventEmitter} from 'react-native';
-import { StackViewStyleInterpolator } from 'react-navigation-stack';
-import { Scene, Router, Actions, Reducer, ActionConst, Overlay, Tabs, Modal, Drawer, Stack, Lightbox } from 'react-native-router-flux';
-import Icon from 'react-native-vector-icons/Entypo';
-import CustomNavBar from './components/customNav'
-import Home from './modules/home/views';
-import AddProject from './modules/addProject/views';
-import SelectTemplate from './modules/addProject/views/selectTemplate';
-import RunHtml from './modules/edit/views/run';
-import EditHTML from './modules/edit/views/editHTML';
-import EditJS from './modules/edit/views/editJS';
-import EditCSS from './modules/edit/views/editCSS';
-import ToastView from 'components/base/toastView';
-import DialogsView from 'components/base/dialogsView';
+import React, {Component} from "react";
+import {Platform, StyleSheet, Text, View, NativeEventEmitter, DeviceEventEmitter} from "react-native";
+import { StackViewStyleInterpolator } from "react-navigation-stack";
+import { Scene, Router, Actions, Reducer, ActionConst, Overlay, Tabs, Modal, Drawer, Stack, Lightbox } from "react-native-router-flux";
+import Icon from "react-native-vector-icons/Entypo";
+import CustomNavBar from "./components/customNav"
+import Home from "./modules/home/views";
+import AddProject from "./modules/addProject/views";
+import SelectTemplate from "./modules/addProject/views/selectTemplate";
+import RunHtml from "./modules/edit/views/run";
+import EditHTML from "./modules/edit/views/editHTML";
+import EditJS from "./modules/edit/views/editJS";
+import EditCSS from "./modules/edit/views/editCSS";
+import ToastView from "components/base/toastView";
+import DialogsView from "components/base/dialogsView";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'transparent',
-        justifyContent: 'center',
-        alignItems: 'center',
+        backgroundColor: "transparent",
+        justifyContent: "center",
+        alignItems: "center",
     },
     tabBarStyle: {
-        backgroundColor: '#eee',
+        backgroundColor: "#eee",
     },
     tabBarSelectedItemStyle: {
-        backgroundColor: '#ddd',
+        backgroundColor: "#ddd",
     },
     navigationBar:{
         backgroundColor: "#fff",
         borderBottomWidth: 1,
-        borderBottomColor: '#dadada',
+        borderBottomColor: "#dadada",
         elevation: 0,
         height: 44,
     },
     navigationBarTitle:{
         fontSize: 18,
-        fontWeight: 'normal',
-        color: '#222',
-        textAlign: 'center',
-        alignSelf: 'center',
+        fontWeight: "normal",
+        color: "#222",
+        textAlign: "center",
+        alignSelf: "center",
         flex:1
     }
 });
@@ -57,7 +57,7 @@ const stateHandler = (prevState, newState, action) => {
 };
 
 const getSceneStyle = () => ({
-    backgroundColor: '#F5FCFF',
+    backgroundColor: "#F5FCFF",
     shadowOpacity: 1,
     shadowRadius: 3,
 });
@@ -82,7 +82,7 @@ const Example = () => (
                             legacy
                             backToInitial
                             onTabOnPress={() => {
-                                console.log('Back to initial and also print this');
+                                console.log("Back to initial and also print this");
                             }}
                             swipeEnabled={false}
                             showLabel={true}
@@ -92,9 +92,9 @@ const Example = () => (
                             activeBackgroundColor="white"
                             inactiveBackgroundColor="rgba(255, 0, 0, 0.5)"
                         >
-                            <Scene key="editJS" hideNavBar component={EditJS} title="js" onEnter={()=>{DeviceEventEmitter.emit('编辑','js')}} />
-                            <Scene key="editHTML" hideNavBar component={EditHTML} title="html" onEnter={()=>{DeviceEventEmitter.emit('编辑','html')}} />
-                            <Scene key="editCSS" hideNavBar component={EditCSS} title="css" onEnter={()=>{DeviceEventEmitter.emit('编辑','css')}} />
+                            <Scene key="editJS" hideNavBar component={EditJS} title="js" onEnter={()=>{DeviceEventEmitter.emit("编辑","js")}} />
+                            <Scene key="editHTML" hideNavBar component={EditHTML} title="html" onEnter={()=>{DeviceEventEmitter.emit("编辑","html")}} />
+                            <Scene key="editCSS" hideNavBar component={EditCSS} title="css" onEnter={()=>{DeviceEventEmitter.emit("编辑","css")}} />
                         </Tabs>
                     </stack>
                     <Scene key="ToastView" component={ToastView} title="ToastView" navBar={CustomNavBar} />

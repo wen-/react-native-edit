@@ -11,7 +11,7 @@ import {
     DeviceEventEmitter, Animated, Easing,
 } from 'react-native';
 import { connect } from 'dva-no-router';
-import { Actions as Router } from 'react-native-router-flux'
+import { Actions as Router } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Entypo';
 import Spinner from 'react-native-spinkit';
 import Toast from 'components/base/toast';

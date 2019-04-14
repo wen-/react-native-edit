@@ -1,20 +1,20 @@
 import {
   fetchOrderDetail
-} from '../api/index';
+} from "../api/index";
 
 export default {
-  namespace: 'home',
+  namespace: "home",
   state: {
     dataSource: [],
   },
   effects: {
     //详情
     *getData({params}, { call, put }) {
-      const result = yield call(()=>Store.get('projectList'));
+      const result = yield call(()=>Store.get("projectList"));
       console.log(result);
       if(result){
         yield put({
-          type: 'setData',
+          type: "setData",
           data: {dataSource: result}
         });
       }
